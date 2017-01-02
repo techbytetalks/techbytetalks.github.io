@@ -14,19 +14,22 @@ JVM provides automatic memory management through a program called as Garbage Col
 and also the various Garbage Collectors in Java.
 
 ### Garbage Collection Overview
-Garbage Collection Involves:
+The Garbage Collection typically involves:
+
 1. Mark - Starts from the root node of your application and walks the object graph and marks objects that are reachable
-2. Sweep: Delete objects that are unreachable
-3. Compacting: Compact the memory by moving around the objects and making the allocation contiguous than fragmented
+2. Sweep - Delete objects that are unreachable
+3. Compacting - Compact the memory by moving around the objects and making the allocation contiguous than fragmented
 
 Ideal characteristics of GC:
-- Maximize Throughput
-- Minimize Latency
-- Minimize Footprint
 
-Why Generational GC?
+* Maximize Throughput
+* Minimize Latency
+* Minimize Footprint
+
+#### Why Generational GC?
+
 Based on empirically observed properties of most applications, it has been seen that most objects die young.
-So the GC exploits this property and divides the heap into two main regions - Young generation and the Old/Tenured generation.
+So the GC exploits this property and divides the heap into two main regions - **Young generation** and the **Old/Tenured generation**.
 Most new objects all go into this young generation and when the young generation is filled up, a minor collection occurs
 which will free up space in the young generation.
 After a number of minor GC cycles, objects that survive those GC cycles are moved to tenured generation.
@@ -35,23 +38,28 @@ Major collections usually last much longer than minor collections because a sign
 
 ### Generational collectors cycle
 Heap Space is divided into Two parts:
-1. Young Generation: New objects are all placed here
+
+1. **Young Generation**: New objects are all placed here
    Further divided into
-   i. Eden Space : New Object goes here first. e.g. new HashMap
-   ii. Survivor Space: If Eden space is full, GC will trigger and clean unreachable objects and place reachable objects in this place.
+
+   i. **Eden Space** : New Object goes here first. e.g. new HashMap
+
+   ii. **Survivor Space**: If Eden space is full, GC will trigger and clean unreachable objects and place reachable objects in this place.
        That way Eden is entirely empty now
       There are two Survivor spaces: From and To
       When minor GC runs, it clean up Eden and moves reachable objects to Survivor space.
       When minor GC runs again (when Eden is full), it moves reachable objects to next Survivor and also reachable objects from previous Survivor here.
       That way both Eden and one of the Survivor space is empty
 
-2. Old/Tenured generation:
-  Objects which survive several cycles of GC and still has references pointing to it.
+2. **Old/Tenured generation**: Objects which survive several cycles of GC and still has references pointing to it.
 
 ### Minor and Major Cycles
+
 2 cycles: Minor and Major - both are usually stop the world meaning your entire Java application is halted.
-Minor - goes through the young generation and cleans up Eden/Survivor space
-Major - goes through entire Heap and cleans up both Old and Young
+
+* **Minor** - goes through the young generation and cleans up Eden/Survivor space
+* **Major** - goes through entire Heap and cleans up both Old and Young.
+
 If objects in Survivor survive a specific threshold of GC cycles (-XX MaxTenuringThreshold), objects are moved to Old Generation and Survivor space is freed.
 
 
@@ -68,8 +76,8 @@ Option | Description
 
 ## References
 
-[Garbage collection in Java, with Animation and discussion of G1 GC ](https://www.youtube.com/watch?v=UnaNQgzw4zY)
-[Java (JVM) Memory Model ](http://www.journaldev.com/2856/java-jvm-memory-model-memory-management-in-java)
-[JStat](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html)
-[G1 GC](https://www.infoq.com/articles/G1-One-Garbage-Collector-To-Rule-Them-All)
-[G1 Garbage Collector Details and Tuning by Simone Bordet](https://www.youtube.com/watch?v=Gee7QfoY8ys)
+- [Garbage collection in Java, with Animation and discussion of G1 GC ](https://www.youtube.com/watch?v=UnaNQgzw4zY)
+- [Java (JVM) Memory Model ](http://www.journaldev.com/2856/java-jvm-memory-model-memory-management-in-java)
+- [JStat](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html)
+- [G1 GC](https://www.infoq.com/articles/G1-One-Garbage-Collector-To-Rule-Them-All)
+- [G1 Garbage Collector Details and Tuning by Simone Bordet](https://www.youtube.com/watch?v=Gee7QfoY8ys)
