@@ -72,7 +72,7 @@ Option | Description
 -XX:+UseParallelOldGC |Both Young and Old generation uses multi-threaded Parallel GC - Useful for Batch apps, better throughput
 -XX:+UseConcMarkSweepGC | Enables concurrent GC for old GC.
 -XX:+UseParNewGC  | Parallel GC for Young gen - Adding this option to CMS gives - parallel for Young gen and CMS for old gen
--XX:+UseG1GC | Enable G1 GC (default on JDK 1.7)
+-XX:+UseG1GC | Enable G1 GC 
 
 ## References
 
